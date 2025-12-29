@@ -1,5 +1,5 @@
 ---
-title: How Xiaohongshu (RedNote) Scales to Handle Traffic Surges with Karmada-Powered Multi-Cloud Federation
+title: How Xiaohongshu (RedNote) Handled TikTok Refugee Surges with Karmada
 ---
 
 ## Company Overview
@@ -12,22 +12,22 @@ The platform's core business centers on search, advertising, and recommendations
 
 ### Cluster Proliferation and Resource Silos
 
-Xiaohongshu's infrastructure evolved into a complex landscape of dozens of Kubernetes clusters spread across multiple cloud providers and self-built data centers. This fragmentation stemmed from several factors:
+Xiaohongshu's infrastructure evolved into a complex landscape of dozens of Kubernetes clusters spread across multiple cloud providers and self-built data centers. This fragmentation came from several factors:
 
-- **Cluster Size Limitations**: Using managed Kubernetes services (TKE/ACK) from cloud vendors imposed strict cluster size limits. While this ensured individual cluster stability, it created resource silos from a global perspective.
+- **Cluster Size Limitations**: Using managed Kubernetes services (TKE/ACK) from cloud vendors had strict cluster size limits. While this ensured individual cluster stability, it created resource silos from a global perspective.
 - **Rapid Business Growth**: Clusters would fill to capacity within months, forcing teams to either redeploy services across new clusters or migrate between clusters—both operationally expensive tasks.
 - **Network Heterogeneity**: Self-built data centers used Underlay networking for performance, while cloud environments operated on different network planes, preventing simple node addition from cloud to on-premises clusters.
 - **Resource Inefficiency**: Cluster fragmentation led to poor resource utilization, with some clusters oversubscribed while others had idle capacity.
 
 ### The Ideal vs. Reality Gap
 
-The ideal deployment model was straightforward: business teams select a region, and the platform provides a unified resource pool. The reality was starkly different—a single region might contain dozens of isolated clusters with heterogeneous machine types, making efficient resource scheduling nearly impossible.
+The ideal deployment model was straightforward: business teams select a region, and the platform provides a unified resource pool. The reality was very different—a single region might contain dozens of isolated clusters with different types of machines, making efficient resource scheduling nearly impossible.
 
 ![Xiaohongshu Architecture](./static/xiaohongshu_01.webp)
 
 ### The TikTok Refugee Crisis: A Wake-Up Call
 
-In January 2025, when TikTok faced potential restrictions, millions of users suddenly migrated to Xiaohongshu, causing unprecedented traffic spikes. The self-built data centers' resources were immediately exhausted. The team faced three difficult options:
+In January 2025, when TikTok faced potential restrictions, millions of users suddenly migrated to Xiaohongshu, causing massive traffic spikes. The self-built data centers' resources were immediately exhausted. The team faced three difficult options:
 
 1. **Emergency server procurement**: But with Chinese New Year approaching, delivery was uncertain and costs would be astronomical
 2. **Traffic redistribution**: Shift more traffic to cloud regions, but this would require scaling entire service chains, not just individual services, dramatically increasing costs and complexity
@@ -44,7 +44,7 @@ Xiaohongshu chose to build a federated cluster system with Karmada at its core, 
 
 ### Architecture Design Principles
 
-The solution comprised three core components:
+The solution included three core components:
 
 **1. Unified API Gateway**
 
@@ -58,18 +58,18 @@ This design allows standard Kubernetes clients (kubectl, client-go) to work seam
 
 **2. Multi-Tier Scheduling System**
 
-The scheduling architecture implements a "self-built first, cloud backup" policy:
+The scheduling architecture uses a "self-built first, cloud backup" policy:
 
-- **Regional scheduling**: Prioritizes self-built data center resources, automatically bursting to cloud when capacity is insufficient
-- **Pre-scheduling capability**: Captures resource snapshots from member clusters and simulates complete scheduling logic to determine optimal replica distribution
+- **Regional scheduling**: Prioritizes self-built data center resources, automatically bursting to cloud when capacity is not enough
+- **Pre-scheduling capability**: Takes resource snapshots from member clusters and runs through complete scheduling logic to determine optimal replica distribution
 - **Smart scaledown**: Automatically removes cloud resources first during scaledown operations
 
 **3. Enhanced Workload Orchestration**
 
-Xiaohongshu extended Karmada with custom capabilities to ensure production-grade reliability:
+Xiaohongshu extended Karmada with custom features to ensure production-grade reliability:
 
 - **Fleet-Root mechanism**: Provides fine-grained rollout orchestration at the federation level, ensuring parameters like `MaxUnavailable` and `MaxSurge` work correctly across distributed clusters
-- **Federated HPA**: Moves autoscaling logic to the federation layer, enabling more efficient resource utilization across clusters
+- **Federated HPA**: Moves autoscaling logic to the federation layer, enabling more efficient resource usage across clusters
 - **Custom StatefulSet**: Developed a stateful workload controller with customizable index orchestration for search and recommendation services with terabyte-scale data
 
 ![Federation Architecture](./static/xiaohongshu_03.webp)
@@ -78,11 +78,11 @@ Xiaohongshu extended Karmada with custom capabilities to ensure production-grade
 
 ### Search and Recommendation: Stateful Workload Federation
 
-Search and recommendation services at Xiaohongshu process massive index tables requiring stateful orchestration. Native StatefulSets couldn't be split across clusters due to rigid pod naming and indexing.
+Search and recommendation services at Xiaohongshu process massive index tables that need stateful orchestration. Native StatefulSets couldn't be split across clusters due to rigid pod naming and indexing.
 
-The custom stateful workload enables:
+The custom stateful workload provides:
 - Customizable pod indexing across clusters (e.g., cluster 1: pods 0-2, cluster 2: pods 3-5)
-- Fine-grained status reporting for each pod index
+- Detailed status reporting for each pod index
 - Incremental data updates without full reloads
 
 ![Stateful Workload Architecture](./static/xiaohongshu_07.webp)
@@ -94,7 +94,7 @@ During the TikTok user migration crisis, the federation system proved its value:
 - **Rapid response**: Cloud clusters (ACK) were dynamically added to the federation
 - **Targeted scaling**: Only services experiencing pressure scaled to the cloud, not entire service chains
 - **Automatic scaledown**: After traffic normalized, cloud resources were released automatically
-- **Cost optimization**: Service-level granular scaling minimized costs compared to chain-wide scaling
+- **Cost optimization**: Service-level precise scaling minimized costs compared to chain-wide scaling
 
 This approach delivered the lowest risk and cost profile during the crisis.
 
@@ -102,7 +102,7 @@ This approach delivered the lowest risk and cost profile during the crisis.
 
 ### GPU Resource Pool Unification for LLM Inference
 
-Large language model inference presented unique challenges:
+Large language model inference had unique challenges:
 
 - **GPU scarcity**: Tens of thousands of GPU cards scattered across dozens of clusters
 - **HPA inefficiency**: Without federation, HPA required at least one replica per cluster. For 100 models across 10 clusters, this meant 1,000 minimum replicas even during low traffic
@@ -111,14 +111,14 @@ Large language model inference presented unique challenges:
 With federation:
 - **Single deployment**: Business teams deploy once; federation handles distribution
 - **Optimized HPA**: Federation-level HPA can scale to a single replica globally during low traffic
-- **Dramatic efficiency gains**: GPU utilization improved significantly by eliminating mandatory per-cluster replicas
+- **Dramatic efficiency gains**: GPU usage improved significantly by removing required per-cluster replicas
 
 ![GPU Resource Pool](./static/xiaohongshu_09.webp)
 
 ## Key Results and Metrics
 
-- **Operational efficiency**: Eliminated manual multi-cluster deployments and migrations
-- **Resource utilization**: Significantly improved through global resource pooling and federation-level HPA
+- **Operational efficiency**: Removed manual multi-cluster deployments and migrations
+- **Resource usage**: Significantly improved through global resource pooling and federation-level HPA
 - **Cost optimization**: Service-level scaling instead of chain-wide scaling during traffic spikes
 - **Developer experience**: Zero-cost migration for existing applications due to full Kubernetes API compatibility
 - **GPU efficiency**: Reduced minimum replica counts from 10x per model to 1x per model, freeing hundreds of GPU cards
@@ -137,10 +137,10 @@ Xiaohongshu evaluated multiple federation solutions and selected Karmada for sev
 
 ## Lessons Learned
 
-1. **Start with resource efficiency**: Federation's value extends beyond disaster recovery to fundamental resource optimization
+1. **Start with resource efficiency**: Federation's value goes beyond disaster recovery to fundamental resource optimization
 2. **Maintain API compatibility**: Zero migration cost is critical for adoption by existing platforms and teams
-3. **Extend thoughtfully**: Native Karmada needed production-grade enhancements like federation-level rollout control
-4. **Plan for heterogeneity**: Network and infrastructure differences between cloud and on-premises require careful architecture
+3. **Extend carefully**: Native Karmada needed production-grade enhancements like federation-level rollout control
+4. **Plan for differences**: Network and infrastructure differences between cloud and on-premises require careful architecture
 5. **Community engagement**: Contributing back to Karmada and collaborating on features like Volcano integration benefits everyone
 
 ## Future Plans
@@ -156,6 +156,6 @@ Xiaohongshu continues to expand their Karmada-based federation:
 
 ## Conclusion
 
-Xiaohongshu's journey with Karmada demonstrates how multi-cluster federation can transform hybrid cloud operations from a management burden into a competitive advantage. By focusing on resource efficiency, maintaining Kubernetes compatibility, and extending Karmada thoughtfully, the company built a system that not only solved immediate operational pain points but also provided the foundation for handling unexpected challenges—like a sudden 10x traffic spike from millions of new users.
+Xiaohongshu's journey with Karmada shows how multi-cluster federation can transform hybrid cloud operations from a management burden into a competitive advantage. By focusing on resource efficiency, maintaining Kubernetes compatibility, and extending Karmada carefully, the company built a system that not only solved immediate operational pain points but also provided the foundation for handling unexpected challenges—like a sudden 10x traffic spike from millions of new users.
 
-The success during the TikTok migration event validated the architecture's core premise: unified resource scheduling across fragmented clusters enables both operational efficiency and business resilience. As Xiaohongshu continues to scale, Karmada remains central to their strategy for managing complexity while maintaining agility in a dynamic multi-cloud environment.
+The success during the TikTok migration event proved the architecture's core idea: unified resource scheduling across fragmented clusters enables both operational efficiency and business resilience. As Xiaohongshu continues to scale, Karmada remains central to their strategy for managing complexity while maintaining agility in a dynamic multi-cloud environment.
