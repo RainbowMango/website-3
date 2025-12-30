@@ -8,6 +8,10 @@ Xiaohongshu (RedNote) is a leading lifestyle and social e-commerce platform in C
 
 To meet these resource demands while maintaining business agility, Xiaohongshu operates a hybrid cloud infrastructure combining self-built data centers with multiple public cloud providers. This architecture enables elastic scaling and ensures the platform can respond quickly to traffic surges.
 
+> "Karmada has become essential to our multi-cloud strategy, enabling us to manage resource fragmentation as a competitive advantage rather than a operational burden. The platform's Kubernetes-native approach meant zero migration cost, while its extensibility allowed us to build production-grade features. Most importantly, during the unexpected TikTok migration surge, Karmada's federation capabilities proved invaluable—we could elastically burst to cloud resources for specific services rather than entire chains, delivering the lowest risk and cost profile during the crisis."
+>
+> — **Yuqi Huang**, Director of Cloud Native Infrastructure at Xiaohongshu
+
 ## The Challenge: Resource Fragmentation
 
 Xiaohongshu's infrastructure evolved into a complex landscape of dozens of Kubernetes clusters spread across multiple cloud providers and self-built data centers. Both self-built data centers and managed Kubernetes services (TKE/ACK) from cloud vendors have cluster size limits for stability reasons. As Xiaohongshu's business grew rapidly, these limits necessitated a multi-cluster architecture to support the expanding infrastructure.
@@ -139,27 +143,21 @@ Xiaohongshu evaluated multiple federation solutions and selected Karmada for sev
 
 1. **Kubernetes-native API**: No application refactoring required; standard Kubernetes clients work without modification
 2. **Resource-centric design**: Focus on resource scheduling aligns with Xiaohongshu's efficiency goals
-3. **Independent architecture components**: Separate etcd and scheduler enable horizontal scaling
 4. **Flexible cluster access**: Both push and pull modes support diverse network topologies
 5. **Active community**: Open governance and responsive community support ongoing improvements
-6. **Extensibility**: CRD-based policy system enabled custom enhancements like Fleet-Root
-
-## Lessons Learned
-
-1. **Start with resource efficiency**: Federation's value goes beyond disaster recovery to fundamental resource optimization
-2. **Maintain API compatibility**: Zero migration cost is critical for adoption by existing platforms and teams
-3. **Extend thoughtfully**: Native Karmada needed production-grade enhancements like federation-level rollout control
-4. **Plan for heterogeneity**: Network and infrastructure differences between cloud and on-premises require careful architecture
-5. **Community engagement**: Contributing back to Karmada and collaborating on features like Volcano integration benefits everyone
+6. **Extensibility**: Provides out-of-the-box and configurable capabilities, making it convenient to extend controllers and scheduling policies
 
 ## Future Plans
 
-Xiaohongshu continues to expand their Karmada-based federation:
+Xiaohongshu continues to expand their Karmada-based federation with plans to:
 
-1. **Broader workload coverage**: Extending federation to AI training workloads and Spark big data jobs
-2. **Enhanced scheduling**: Collaborating with the Karmada community on Volcano scheduler integration for more sophisticated scheduling decisions
-3. **Advanced policies**: Developing more intelligent scheduling policies based on cost, latency, and resource characteristics
-4. **Deeper integration**: Further automation of cluster lifecycle management and resource optimization
+1. **AI Training and Big Data Workload Federation**: Extending federation support to AI training workloads and Spark big data jobs, leveraging community contributions and existing ecosystem solutions
+
+2. **Contributing Extensions Back**: Sharing Xiaohongshu's custom enhancements, including Fleet-Root and other production-grade features, back to the Karmada community to benefit other users
+
+3. **Intelligent Scheduling Policies**: Contributing cost and latency-aware scheduling strategies to help optimize resource allocation across hybrid cloud environments
+
+4. **Community Performance Optimization**: Joining the Karmada community's performance optimization efforts to help continuously improve the platform's efficiency and reliability
 
 ![Future Architecture](./static/xiaohongshu_10.webp)
 
