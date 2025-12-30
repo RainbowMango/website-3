@@ -12,6 +12,8 @@ To meet these resource demands while maintaining business agility, Xiaohongshu o
 >
 > — **Yuqi Huang**, Director of Cloud Native Infrastructure at Xiaohongshu
 
+![Future Architecture](./static/placeholder_image.png)
+
 ## The Challenge: Resource Fragmentation
 
 Xiaohongshu's infrastructure evolved into a complex landscape of dozens of Kubernetes clusters spread across multiple cloud providers and self-built data centers. Both self-built data centers and managed Kubernetes services (TKE/ACK) from cloud vendors have cluster size limits for stability reasons. As Xiaohongshu's business grew rapidly, these limits necessitated a multi-cluster architecture to support the expanding infrastructure.
@@ -30,7 +32,7 @@ This cluster fragmentation created multiple operational problems:
 
 The ideal deployment model was straightforward: business teams select a region, and the platform provides a unified resource pool. The reality was very different—a single region might contain dozens of isolated clusters with different types of machines, making efficient resource scheduling nearly impossible.
 
-![Xiaohongshu Architecture](./static/xiaohongshu_01.webp)
+![Xiaohongshu Architecture](./static/xiaohongshu_02.webp)
 
 ### The TikTok Refugee Crisis: A Wake-Up Call
 
@@ -48,6 +50,8 @@ Xiaohongshu chose to build a federated cluster system with Karmada at its core, 
 
 1. **Hide cluster complexity from business teams**: Enable teams to think in terms of regions, not individual clusters
 2. **Unify resource scheduling**: Create a global resource pool from fragmented clusters
+
+![Xiaohongshu Architecture](./static/xiaohongshu_03.webp)
 
 ### Architecture Design Principles
 
@@ -78,8 +82,12 @@ Xiaohongshu extended Karmada with custom features to ensure production-grade rel
 **Fleet-Root mechanism**
 Provides fine-grained rollout orchestration at the federation level, ensuring parameters like `MaxUnavailable` and `MaxSurge` work correctly across distributed clusters
 
+![Federation Architecture](./static/xiaohongshu_05.webp)
+
 **Federated HPA**
 Moves autoscaling logic to the federation layer, enabling more efficient resource utilization across clusters
+
+![Federation Architecture](./static/xiaohongshu_06.webp)
 
 **Custom StatefulSet**
 Developed a stateful workload controller with customizable index orchestration for search and recommendation services. This enables:
@@ -88,7 +96,7 @@ Developed a stateful workload controller with customizable index orchestration f
 - Precise rollout control with fine-grained parameters like `MaxUnavailable` and `MaxSurge`
 - Incremental data updates without full reloads
 
-![Federation Architecture](./static/xiaohongshu_03.webp)
+![Federation Architecture](./static/xiaohongshu_07.webp)
 
 ## Results and Benefits
 
@@ -107,7 +115,7 @@ The search and recommendation services are among the most critical systems at Xi
 - **Precise Release Control**: Enables fine-grained rollout orchestration with parameters like `MaxUnavailable` and `MaxSurge`, ensuring safe and controlled deployments without service disruption
 - **Elastic Cross-Cluster Deployment**: Applications can elastically expand across clusters based on demand, providing the flexibility needed for critical business workloads
 
-![Stateful Workload Architecture](./static/xiaohongshu_07.webp)
+![Future Architecture](./static/placeholder_image.png)
 
 ### GPU Resource Pool Unification for LLM Inference
 
@@ -159,9 +167,9 @@ Xiaohongshu continues to expand their Karmada-based federation with plans to:
 
 4. **Community Performance Optimization**: Joining the Karmada community's performance optimization efforts to help continuously improve the platform's efficiency and reliability
 
-![Future Architecture](./static/xiaohongshu_10.webp)
-
 ## Conclusion
+
+![Future Architecture](./static/xiaohongshu_10.webp)
 
 Xiaohongshu's journey with Karmada demonstrates how multi-cluster federation can transform hybrid cloud operations from a management burden into a competitive advantage. By focusing on resource efficiency, maintaining Kubernetes compatibility, and extending Karmada thoughtfully, the company built a system that not only solved immediate operational pain points but also provided the foundation for handling unexpected challenges—like a sudden 10x traffic spike from millions of new users.
 
