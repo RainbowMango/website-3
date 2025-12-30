@@ -10,13 +10,7 @@ To meet these resource demands while maintaining business agility, Xiaohongshu o
 
 ## The Challenge: Resource Fragmentation
 
-Xiaohongshu's infrastructure evolved into a complex landscape of dozens of Kubernetes clusters spread across multiple cloud providers and self-built data centers. 
-
-**Why Multiple Clusters Were Necessary:**
-
-Both self-built data centers and managed Kubernetes services (TKE/ACK) from cloud vendors have cluster size limits for stability reasons. As Xiaohongshu's business grew rapidly, these limits necessitated a multi-cluster architecture to support the expanding infrastructure.
-
-**The Core Challenges:**
+Xiaohongshu's infrastructure evolved into a complex landscape of dozens of Kubernetes clusters spread across multiple cloud providers and self-built data centers. Both self-built data centers and managed Kubernetes services (TKE/ACK) from cloud vendors have cluster size limits for stability reasons. As Xiaohongshu's business grew rapidly, these limits necessitated a multi-cluster architecture to support the expanding infrastructure.
 
 This cluster fragmentation created multiple operational problems:
 
@@ -55,7 +49,7 @@ Xiaohongshu chose to build a federated cluster system with Karmada at its core, 
 
 The solution included three core components:
 
-**1. Unified API Gateway**
+#### 1. Unified API Gateway
 
 Xiaohongshu maintained Kubernetes API compatibility to ensure zero migration cost for existing platforms and applications. They built a custom access layer that intelligently routes requests:
 - Workload resources (Deployments, StatefulSets) route to Karmada's control plane
@@ -65,7 +59,7 @@ This design allows standard Kubernetes clients (kubectl, client-go) to work seam
 
 ![Unified API Architecture](./static/xiaohongshu_04.webp)
 
-**2. Multi-Tier Scheduling System**
+#### 2. Multi-Tier Scheduling System
 
 The scheduling architecture uses a "self-built first, cloud backup" policy:
 
@@ -73,17 +67,22 @@ The scheduling architecture uses a "self-built first, cloud backup" policy:
 - **Pre-scheduling capability**: Captures resource snapshots from member clusters and simulates complete scheduling logic to determine optimal replica distribution
 - **Smart scaledown**: Automatically removes cloud resources first during scaledown operations
 
-**3. Enhanced Workload Orchestration**
+#### 3. Enhanced Workload Orchestration
 
 Xiaohongshu extended Karmada with custom features to ensure production-grade reliability:
 
-- **Fleet-Root mechanism**: Provides fine-grained rollout orchestration at the federation level, ensuring parameters like `MaxUnavailable` and `MaxSurge` work correctly across distributed clusters
-- **Federated HPA**: Moves autoscaling logic to the federation layer, enabling more efficient resource utilization across clusters
-- **Custom StatefulSet**: Developed a stateful workload controller with customizable index orchestration for search and recommendation services with terabyte-scale data
+**Fleet-Root mechanism**
+Provides fine-grained rollout orchestration at the federation level, ensuring parameters like `MaxUnavailable` and `MaxSurge` work correctly across distributed clusters
+
+**Federated HPA**
+Moves autoscaling logic to the federation layer, enabling more efficient resource utilization across clusters
+
+**Custom StatefulSet**
+Developed a stateful workload controller with customizable index orchestration for search and recommendation services with terabyte-scale data
 
 ![Federation Architecture](./static/xiaohongshu_03.webp)
 
-## Implementation and Results
+## Impact and Results
 
 ### Search and Recommendation: Stateful Workload Federation
 
