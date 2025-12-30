@@ -78,35 +78,32 @@ Provides fine-grained rollout orchestration at the federation level, ensuring pa
 Moves autoscaling logic to the federation layer, enabling more efficient resource utilization across clusters
 
 **Custom StatefulSet**
-Developed a stateful workload controller with customizable index orchestration for search and recommendation services with terabyte-scale data
+Developed a stateful workload controller with customizable index orchestration for search and recommendation services. This enables:
+- Customizable pod indexing across clusters (e.g., cluster 1: pods 0-2, cluster 2: pods 3-5)
+- Detailed status reporting for each pod index
+- Precise rollout control with fine-grained parameters like `MaxUnavailable` and `MaxSurge`
+- Incremental data updates without full reloads
 
 ![Federation Architecture](./static/xiaohongshu_03.webp)
 
-## Impact and Results
+## Results and Benefits
 
-### Search and Recommendation: Stateful Workload Federation
+- **Operational efficiency**: Eliminated manual multi-cluster deployments and migrations
+- **Resource utilization**: Significantly improved through global resource pooling and federation-level HPA
+- **Cost optimization**: Service-level scaling instead of chain-wide scaling during traffic surges
+- **Developer experience**: Zero-cost migration for existing applications due to full Kubernetes API compatibility
+- **GPU efficiency**: Reduced minimum replica counts from 10x per model to 1x per model, freeing hundreds of GPU cards
+- **Resilience**: Successfully handled unexpected 10x+ traffic spike during TikTok migration event
 
-Search and recommendation services at Xiaohongshu process massive index tables that need stateful orchestration. Native StatefulSets couldn't be split across clusters due to rigid pod naming and indexing.
+### Search and Recommendation: Precise Management at Scale
 
-The custom stateful workload enables:
-- Customizable pod indexing across clusters (e.g., cluster 1: pods 0-2, cluster 2: pods 3-5)
-- Detailed status reporting for each pod index
-- Incremental data updates without full reloads
+The search and recommendation services are among the most critical systems at Xiaohongshu, processing massive index tables reaching terabyte scale. With the custom StatefulSet controller, these large-scale stateful workloads can now be precisely managed and orchestrated across the federation:
+
+- **Large-Scale Management**: Successfully manages massive distributed applications with thousands of replicas across multiple clusters while maintaining data consistency
+- **Precise Release Control**: Enables fine-grained rollout orchestration with parameters like `MaxUnavailable` and `MaxSurge`, ensuring safe and controlled deployments without service disruption
+- **Elastic Cross-Cluster Deployment**: Applications can elastically expand across clusters based on demand, providing the flexibility needed for critical business workloads
 
 ![Stateful Workload Architecture](./static/xiaohongshu_07.webp)
-
-### Surviving the Traffic Surge
-
-During the TikTok user migration crisis, the federation system proved its value:
-
-- **Rapid response**: Cloud clusters (ACK) were dynamically added to the federation
-- **Targeted scaling**: Only services experiencing pressure scaled to the cloud, not entire service chains
-- **Automatic scaledown**: After traffic normalized, cloud resources were released automatically
-- **Cost optimization**: Service-level precise scaling minimized costs compared to chain-wide scaling
-
-This approach delivered the lowest risk and cost profile during the crisis.
-
-![Traffic Surge Response](./static/xiaohongshu_08.webp)
 
 ### GPU Resource Pool Unification for LLM Inference
 
@@ -123,14 +120,18 @@ With federation:
 
 ![GPU Resource Pool](./static/xiaohongshu_09.webp)
 
-## Key Results and Metrics
+### Surviving the Traffic Surge
 
-- **Operational efficiency**: Eliminated manual multi-cluster deployments and migrations
-- **Resource utilization**: Significantly improved through global resource pooling and federation-level HPA
-- **Cost optimization**: Service-level scaling instead of chain-wide scaling during traffic surges
-- **Developer experience**: Zero-cost migration for existing applications due to full Kubernetes API compatibility
-- **GPU efficiency**: Reduced minimum replica counts from 10x per model to 1x per model, freeing hundreds of GPU cards
-- **Resilience**: Successfully handled unexpected 10x+ traffic spike during TikTok migration event
+During the TikTok user migration crisis, the federation system proved its value:
+
+- **Rapid response**: Cloud clusters (ACK) were dynamically added to the federation
+- **Targeted scaling**: Only services experiencing pressure scaled to the cloud, not entire service chains
+- **Automatic scaledown**: After traffic normalized, cloud resources were released automatically
+- **Cost optimization**: Service-level precise scaling minimized costs compared to chain-wide scaling
+
+This approach delivered the lowest risk and cost profile during the crisis.
+
+![Traffic Surge Response](./static/xiaohongshu_08.webp)
 
 ## Why Karmada?
 
