@@ -4,20 +4,29 @@ title: How Xiaohongshu (RedNote) Handled TikTok Refugee Surges with Karmada
 
 ## Company Overview
 
-Xiaohongshu (RedNote) is a leading lifestyle and social e-commerce platform in China with over 300 million monthly active users. The company operates a complex hybrid cloud infrastructure combining self-built data centers with multiple public cloud providers. As a company that was "born in the cloud," Xiaohongshu has been running on cloud infrastructure from its first line of code. In recent years, as resource demands grew substantially, the company began building its own data centers while maintaining strategic partnerships with major cloud providers.
+Xiaohongshu (RedNote) is a leading lifestyle and social e-commerce platform in China with over 300 million monthly active users. The platform's core business centers on search, advertising, and recommendations, complemented by social networking and e-commerce capabilities. These services demand massive computational resources and handle enormous data volumes, with individual index tables reaching terabyte scale.
 
-The platform's core business centers on search, advertising, and recommendations (known internally as "search-ad-recommend" or SAR), complemented by social networking and e-commerce capabilities. These services demand massive computational resources and handle enormous data volumes, with individual index tables reaching terabyte scale.
+To meet these resource demands while maintaining business agility, Xiaohongshu operates a hybrid cloud infrastructure combining self-built data centers with multiple public cloud providers. This architecture enables elastic scaling and ensures the platform can respond quickly to traffic surges.
 
-## The Challenge: Resource Fragmentation in a Multi-Cloud World
+## The Challenge: Resource Fragmentation
 
-### Cluster Proliferation and Resource Silos
+Xiaohongshu's infrastructure evolved into a complex landscape of dozens of Kubernetes clusters spread across multiple cloud providers and self-built data centers. 
 
-Xiaohongshu's infrastructure evolved into a complex landscape of dozens of Kubernetes clusters spread across multiple cloud providers and self-built data centers. This fragmentation came from several factors:
+**Why Multiple Clusters Were Necessary:**
 
-- **Cluster Size Limitations**: Using managed Kubernetes services (TKE/ACK) from cloud vendors had strict cluster size limits. While this ensured individual cluster stability, it created resource silos from a global perspective.
-- **Rapid Business Growth**: Clusters would fill to capacity within months, forcing teams to either redeploy services across new clusters or migrate between clusters—both operationally expensive tasks.
-- **Network Heterogeneity**: Self-built data centers used Underlay networking for performance, while cloud environments operated on different network planes, preventing simple node addition from cloud to on-premises clusters.
-- **Resource Inefficiency**: Cluster fragmentation led to poor resource utilization, with some clusters oversubscribed while others had idle capacity.
+Both self-built data centers and managed Kubernetes services (TKE/ACK) from cloud vendors have cluster size limits for stability reasons. As Xiaohongshu's business grew rapidly, these limits necessitated a multi-cluster architecture to support the expanding infrastructure.
+
+**The Core Challenges:**
+
+This cluster fragmentation created multiple operational problems:
+
+- **Resource Silos and Poor User Experience**: Each cluster operated as an isolated resource silo. Business teams had to be aware of individual clusters when deploying applications, leading to a fragmented platform experience and significant communication overhead.
+
+- **Frequent Application Migrations**: With rapid business growth, clusters would fill to capacity within months. Teams then had to migrate applications to new clusters—a frequent, labor-intensive process that consumed significant operational effort and introduced migration risks.
+
+- **Operational Inflexibility**: Platform engineers conducting cluster maintenance inevitably impacted business teams, requiring them to pause releases or coordinate migrations. The lack of flexibility created friction between platform and application teams.
+
+- **Cross-Cluster Elasticity Gap**: The platform lacked the ability to intelligently distribute workloads. Ideally, it should prioritize self-built data center resources while automatically using cloud resources when capacity became insufficient, but this required coordinated scheduling across isolated clusters.
 
 ### The Ideal vs. Reality Gap
 
@@ -119,7 +128,7 @@ With federation:
 
 - **Operational efficiency**: Eliminated manual multi-cluster deployments and migrations
 - **Resource utilization**: Significantly improved through global resource pooling and federation-level HPA
-- **Cost optimization**: Service-level scaling instead of chain-wide scaling during traffic spikes
+- **Cost optimization**: Service-level scaling instead of chain-wide scaling during traffic surges
 - **Developer experience**: Zero-cost migration for existing applications due to full Kubernetes API compatibility
 - **GPU efficiency**: Reduced minimum replica counts from 10x per model to 1x per model, freeing hundreds of GPU cards
 - **Resilience**: Successfully handled unexpected 10x+ traffic spike during TikTok migration event
