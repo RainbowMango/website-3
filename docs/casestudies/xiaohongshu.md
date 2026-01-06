@@ -6,13 +6,13 @@ title: How Xiaohongshu (RedNote) Handled TikTok Refugee Surges with Karmada
 
 Xiaohongshu (RedNote) is a leading lifestyle and social e-commerce platform in China with over 300 million monthly active users. The platform's core business centers on search, advertising, and recommendations, complemented by social networking and e-commerce capabilities. These services demand massive computational resources and handle enormous data volumes, with individual index tables reaching terabyte scale.
 
-To meet these resource demands while maintaining business agility, Xiaohongshu operates a hybrid cloud infrastructure combining self-built data centers with multiple public cloud providers. This architecture enables elastic scaling and ensures the platform can respond quickly to traffic surges.
+To meet these resource demands while maintaining business agility, Xiaohongshu operates a hybrid cloud infrastructure combining self-built data centers with multiple public cloud providers, with Karmada as the core orchestration layer. This architecture enables elastic scaling and ensures the platform can respond quickly to traffic surges.
 
 > "Karmada has become essential to our multi-cloud strategy, enabling us to manage resource fragmentation as a competitive advantage rather than a operational burden. The platform's Kubernetes-native approach meant zero migration cost, while its extensibility allowed us to build production-grade features. Most importantly, during the unexpected TikTok migration surge, Karmada's federation capabilities proved invaluable—we could elastically burst to cloud resources for specific services rather than entire chains, delivering the lowest risk and cost profile during the crisis."
 >
 > — **Yuqi Huang**, Director of Cloud Native Infrastructure at Xiaohongshu
 
-![Future Architecture](./static/placeholder_image.png)
+![Future Architecture](./static/xiaohongshu_01.png)
 
 ## The Challenge: Resource Fragmentation
 
