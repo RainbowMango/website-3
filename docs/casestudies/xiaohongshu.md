@@ -8,11 +8,11 @@ Xiaohongshu (RedNote) is a leading lifestyle and social e-commerce platform in C
 
 To meet these resource demands while maintaining business agility, Xiaohongshu operates a hybrid cloud infrastructure combining self-built data centers with multiple public cloud providers, with Karmada as the core orchestration layer. This architecture enables elastic scaling and ensures the platform can respond quickly to traffic surges.
 
+![Hybrid Cloud Infrastructure](./static/xiaohongshu_01.png)
+
 > "Karmada has become essential to our multi-cloud strategy, enabling us to manage resource fragmentation as a competitive advantage rather than a operational burden. The platform's Kubernetes-native approach meant zero migration cost, while its extensibility allowed us to build production-grade features. Most importantly, during the unexpected TikTok migration surge, Karmada's federation capabilities proved invaluable—we could elastically burst to cloud resources for specific services rather than entire chains, delivering the lowest risk and cost profile during the crisis."
 >
 > — **Yuqi Huang**, Director of Cloud Native Infrastructure at Xiaohongshu
-
-![Future Architecture](./static/xiaohongshu_01.png)
 
 ## The Challenge: Resource Fragmentation
 
