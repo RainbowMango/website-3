@@ -20,13 +20,15 @@ As Xiaohongshu's business grew rapidly, its infrastructure demands quickly outpa
 
 While this multi-cluster approach solved the capacity problem, it introduced a new challenge: resource fragmentation. The fragmented infrastructure created multiple operational problems:
 
-- **Resource Silos and Poor User Experience**: Each cluster operated as an isolated resource silo. Business teams had to be aware of individual clusters when deploying applications, leading to a fragmented platform experience and significant communication overhead.
+- **Cluster-Aware Deployment Burden**: Each cluster operated as an isolated resource silo. Business teams had to be aware of individual clusters when deploying applications, leading to a fragmented platform experience and significant communication overhead.
 
-- **Frequent Application Migrations**: With rapid business growth, clusters would fill to capacity within months. Teams then had to migrate applications to new clusters—a frequent, labor-intensive process that consumed significant operational effort and introduced migration risks.
+- **Endless Migration Cycles**: With rapid business growth, clusters would fill to capacity within months. Teams then had to migrate applications to new clusters—a frequent, labor-intensive process that consumed significant operational effort and introduced migration risks.
 
-- **Operational Inflexibility**: Platform engineers conducting cluster maintenance inevitably impacted business teams, requiring them to pause releases or coordinate migrations. The lack of flexibility created friction between platform and application teams.
+- **Maintenance Blocks Business**: Platform engineers conducting cluster maintenance inevitably impacted business teams, requiring them to pause releases or coordinate migrations. The lack of flexibility created friction between platform and application teams.
 
-- **Cross-Cluster Elasticity Gap**: The platform lacked the ability to intelligently distribute workloads. Ideally, it should prioritize self-built data center resources while automatically using cloud resources when capacity became insufficient, but this required coordinated scheduling across isolated clusters.
+- **Scattered GPU, Wasted Capacity**: As AI workloads grew rapidly, tens of thousands of GPU cards became scattered across dozens of clusters. Without unified management, GPUs were not effectively utilized—some clusters had long queues waiting for GPU resources while others sat idle.
+
+- **No Cross-Cluster Elasticity**: The platform lacked the ability to intelligently distribute workloads. Ideally, it should prioritize self-built data center resources while automatically bursting to cloud when capacity became insufficient—but this required coordinated scheduling across isolated clusters.
 
 ### The Ideal vs. Reality Gap
 
