@@ -18,7 +18,11 @@ To meet these resource demands while maintaining business agility, Xiaohongshu o
 
 As Xiaohongshu's business grew rapidly, its infrastructure demands quickly outpaced the capacity of individual Kubernetes clusters. Both self-built data centers and managed Kubernetes services (TKE/ACK) from cloud vendors have cluster size limits for stability reasons. To accommodate the expanding workloads, the platform evolved into dozens of Kubernetes clusters spread across multiple cloud providers and self-built data centers.
 
-While this multi-cluster approach solved the capacity problem, it introduced a new challenge: resource fragmentation. The fragmented infrastructure created multiple operational problems:
+While this multi-cluster approach solved the capacity problem, it introduced a new challenge: resource fragmentation. 
+
+![Resource Fragmentation](./static/xiaohongshu_02.png)
+
+The fragmented infrastructure created multiple operational problems:
 
 - **Cluster-Aware Deployment Burden**: Each cluster operated as an isolated resource silo. Business teams had to be aware of individual clusters when deploying applications, leading to a fragmented platform experience and significant communication overhead.
 
