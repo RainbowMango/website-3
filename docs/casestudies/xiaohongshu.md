@@ -34,11 +34,12 @@ The fragmented infrastructure created multiple operational problems:
 
 - **No Cross-Cluster Elasticity**: The platform lacked the ability to intelligently distribute workloads. Ideally, it should prioritize self-built data center resources while automatically bursting to cloud when capacity became insufficient—but this required coordinated scheduling across isolated clusters.
 
-### The Ideal vs. Reality Gap
+### The Ideal Deployment Model
 
-The ideal deployment model was straightforward: business teams select a region, and the platform provides a unified resource pool. The reality was very different—a single region might contain dozens of isolated clusters with different types of machines, making efficient resource scheduling nearly impossible.
+![Ideal Deployment Model](./static/xiaohongshu_03.png)
 
-![Xiaohongshu Architecture](./static/xiaohongshu_02.webp)
+The ideal deployment model is straightforward: business teams select a region, and the platform provides a unified resource pool. This directly addresses the pain points above by:
+Business teams no longer perceive cluster details—deploy once to a region and let the platform handle placement. Infrastructure gains the flexibility to balance capacity, pool GPUs, and burst to cloud without handoffs to the business side.
 
 ### The TikTok Refugee Crisis: A Wake-Up Call
 
