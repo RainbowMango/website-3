@@ -58,7 +58,7 @@ Xiaohongshu chose to build a federated cluster system with Karmada at its core, 
 1. **Hide cluster complexity from business teams**: Enable teams to think in terms of regions, not individual clusters
 2. **Unify resource scheduling**: Create a global resource pool from fragmented clusters
 
-![Xiaohongshu Architecture](./static/xiaohongshu_03.webp)
+![Overall Architecture](./static/xiaohongshu_04.png)
 
 ### Architecture Design Principles
 
