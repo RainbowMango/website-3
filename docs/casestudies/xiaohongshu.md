@@ -72,7 +72,7 @@ Xiaohongshu maintained Kubernetes API compatibility to ensure zero migration cos
 
 This design allows standard Kubernetes clients (kubectl, client-go) to work seamlessly without modification.
 
-![Unified API Architecture](./static/xiaohongshu_04.webp)
+![Unified API Architecture](./static/xiaohongshu_05.png)
 
 #### 2. Multi-Tier Scheduling System
 
