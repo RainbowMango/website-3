@@ -86,7 +86,7 @@ The scheduling architecture uses a "self-built first, cloud backup" policy:
 
 In Xiaohongshu's practice, workload changes require strict control over the rollout pace, similar to `MaxUnavailable` and `MaxSurge` configuration in Deployment. Working together with the community, they designed an extension solution that implements federation-level rolling update strategies by extending the Resource Interpreter.
 
-![Federation Architecture](./static/xiaohongshu_05.webp)
+![Federation Architecture](./static/xiaohongshu_06.png)
 
 As shown in the diagram, during each application update, regardless of how many clusters the replicas are distributed across, each rolling phase updates only one replica at a time, effectively improving the safety of the changes.
 
