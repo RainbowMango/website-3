@@ -84,12 +84,11 @@ The scheduling architecture uses a "self-built first, cloud backup" policy:
 
 #### 3. Enhanced Workload Orchestration
 
-Xiaohongshu extended Karmada with custom features to ensure production-grade reliability:
-
-**Fleet-Root mechanism**
-Provides fine-grained rollout orchestration at the federation level, ensuring parameters like `MaxUnavailable` and `MaxSurge` work correctly across distributed clusters
+In Xiaohongshu's practice, workload changes require strict control over the rollout pace, similar to `MaxUnavailable` and `MaxSurge` configuration in Deployment. Working together with the community, they designed an extension solution that implements federation-level rolling update strategies by extending the Resource Interpreter.
 
 ![Federation Architecture](./static/xiaohongshu_05.webp)
+
+As shown in the diagram, during each application update, regardless of how many clusters the replicas are distributed across, each rolling phase updates only one replica at a time, effectively improving the safety of the changes.
 
 **Federated HPA**
 Moves autoscaling logic to the federation layer, enabling more efficient resource utilization across clusters
