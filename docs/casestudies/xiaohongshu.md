@@ -91,9 +91,14 @@ In Xiaohongshu's practice, workload changes require strict control over the roll
 As shown in the diagram, during each application update, regardless of how many clusters the replicas are distributed across, each rolling phase updates only one replica at a time, effectively improving the safety of the changes.
 
 **Federated HPA**
-Moves autoscaling logic to the federation layer, enabling more efficient resource utilization across clusters
 
-![Federation Architecture](./static/xiaohongshu_06.webp)
+Traditional HPA operates at the individual cluster level, requiring each cluster to independently monitor metrics and make scaling decisions. This approach becomes inefficient in a federated environment where workloads span multiple clusters. Xiaohongshu moved the autoscaling logic to the federation layer, creating a unified view of application health and resource utilization across all clusters.
+
+The Federated HPA Controller (FHPA) collects pod-level metrics from member clusters, aggregates them at the workload level, and makes intelligent scaling decisions based on the complete application state. 
+
+![Federation Architecture](./static/xiaohongshu_07.png)
+
+This architecture enables more efficient resource utilization across clusters. For example, during traffic spikes, FHPA can intelligently scale up replicas in the most appropriate clusters based on available capacity and scheduling policies, rather than requiring each cluster to independently react to local metrics.
 
 **Custom StatefulSet**
 Developed a stateful workload controller with customizable index orchestration for search and recommendation services. This enables:
