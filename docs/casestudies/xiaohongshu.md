@@ -107,7 +107,7 @@ Developed a stateful workload controller with customizable index orchestration f
 - Precise rollout control with fine-grained parameters like `MaxUnavailable` and `MaxSurge`
 - Incremental data updates without full reloads
 
-![Federation Architecture](./static/xiaohongshu_07.webp)
+![Federation Architecture](./static/xiaohongshu_08.png)
 
 ## Results and Benefits
 
