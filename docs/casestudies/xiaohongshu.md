@@ -136,12 +136,12 @@ Large language model inference had unique challenges:
 - **HPA inefficiency**: Without federation, HPA required at least one replica per cluster. For 100 models across 10 clusters, this meant 1,000 minimum replicas even during low traffic
 - **Deployment complexity**: Teams had to manually deploy models to multiple clusters
 
+![GPU Resource Pool](./static/xiaohongshu_09.png)
+
 With federation:
 - **Single deployment**: Business teams deploy once; federation handles distribution
 - **Optimized HPA**: Federation-level HPA can scale to a single replica globally during low traffic
 - **Dramatic efficiency gains**: GPU utilization improved significantly by eliminating mandatory per-cluster replicas
-
-![GPU Resource Pool](./static/xiaohongshu_09.webp)
 
 ### Surviving the Traffic Surge
 
