@@ -126,8 +126,6 @@ The search and recommendation services are among the most critical systems at Xi
 - **Precise Release Control**: Enables fine-grained rollout orchestration with parameters like `MaxUnavailable` and `MaxSurge`, ensuring safe and controlled deployments without service disruption
 - **Elastic Cross-Cluster Deployment**: Applications can elastically expand across clusters based on demand, providing the flexibility needed for critical business workloads
 
-![Future Architecture](./static/placeholder_image.png)
-
 ### GPU Resource Pool Unification for LLM Inference
 
 Large language model inference had unique challenges:
@@ -179,8 +177,6 @@ Xiaohongshu continues to expand their Karmada-based federation with plans to:
 4. **Community Performance Optimization**: Joining the Karmada community's performance optimization efforts to help continuously improve the platform's efficiency and reliability
 
 ## Conclusion
-
-![Future Architecture](./static/xiaohongshu_10.webp)
 
 Xiaohongshu's journey with Karmada demonstrates how multi-cluster federation can transform hybrid cloud operations from a management burden into a competitive advantage. By focusing on resource efficiency, maintaining Kubernetes compatibility, and extending Karmada thoughtfully, the company built a system that not only solved immediate operational pain points but also provided the foundation for handling unexpected challenges—like a sudden 10x traffic spike from millions of new users.
 
