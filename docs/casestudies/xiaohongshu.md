@@ -154,7 +154,7 @@ During the TikTok user migration crisis, the federation system proved its value:
 
 This approach delivered the lowest risk and cost profile during the crisis.
 
-![Traffic Surge Response](./static/xiaohongshu_08.webp)
+![Traffic Surge Response](./static/xiaohongshu_10.png)
 
 ## Why Karmada?
 
