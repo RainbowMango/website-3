@@ -10,7 +10,7 @@ To meet these resource demands while maintaining business agility, Xiaohongshu o
 
 ![Hybrid Cloud Infrastructure](./static/xiaohongshu_01.png)
 
-> "Karmada has become essential to our multi-cloud strategy, enabling us to manage resource fragmentation as a competitive advantage rather than a operational burden. The platform's Kubernetes-native approach meant zero migration cost, while its extensibility allowed us to build production-grade features. Most importantly, during the unexpected TikTok migration surge, Karmada's federation capabilities proved invaluable—we could elastically burst to cloud resources for specific services rather than entire chains, delivering the lowest risk and cost profile during the crisis."
+> "Karmada has become essential to our multi-cloud strategy, enabling us to manage resource fragmentation as a competitive advantage rather than a operational burden. The platform's Kubernetes-native approach meant zero migration cost, while its extensibility allowed us to build production-grade features. Most importantly, during periods of unexpected traffic surges, Karmada's federation capabilities proved invaluable—we could elastically burst to cloud resources for specific services rather than entire chains, delivering the lowest risk and cost profile during peak demand."
 >
 > — **Yuqi Huang**, Director of Cloud Native Infrastructure at Xiaohongshu
 
