@@ -28,6 +28,7 @@ import gongjikeji from "../../static/img/supporters/gongjikeji.png"
 import sensetime from "../../static/img/supporters/sensetime.png"
 import jetbrains from "../../static/img/supporters/jetbrains.png"
 import songke from "../../static/img/supporters/songke.png"
+import gmicloud from "../../static/img/supporters/gmicloud.png"
 
 const supportersData = [
     {
@@ -149,6 +150,10 @@ const supportersData = [
     {
         logo: songke,
         alt: 'Songke Intelligence',
+    },
+    {
+        logo: gmicloud,
+        alt: 'GMI Cloud',
     },
 
 ]
